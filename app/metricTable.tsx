@@ -1,9 +1,9 @@
 import { Fragment, useState } from "react";
-import { Button, Card, Flex, Text, TextInput, BarList, Title } from "@tremor/react";
+import { Button, Card, Flex, TextInput, BarList, Title, Icon } from "@tremor/react";
 import { Dialog, Transition } from "@headlessui/react";
 import { ArrowsPointingOutIcon } from "@heroicons/react/24/outline";
 import { MagnifyingGlassIcon } from "@heroicons/react/24/solid";
-import { fileSizePretty } from "./helpers/utils";
+import { InformationCircleIcon } from '@heroicons/react/24/solid';
 
   //const valueFormatter = (number:any) => `${Intl.NumberFormat("us").format(number).toString()}`;
   
@@ -14,6 +14,7 @@ import { fileSizePretty } from "./helpers/utils";
     grouper, 
     grouperName, 
     title, 
+    tooltip,
     valueFormatter
   }: { 
     data: any[],
@@ -22,6 +23,7 @@ import { fileSizePretty } from "./helpers/utils";
     grouper: string,
     grouperName: string,
     title: string,
+    tooltip: string,
     valueFormatter: (arg0: any) => string,
   }) {
 
@@ -55,6 +57,7 @@ import { fileSizePretty } from "./helpers/utils";
         <Card className="max-w-xl mx-auto h-96">
         <Flex justifyContent="start" className="space-x-2 mb-4">
           <Title>{title}</Title>
+          <Icon icon={InformationCircleIcon} color="stone" tooltip={tooltip} />
         </Flex>
           <BarList
             data={pages.slice(0, 5)}

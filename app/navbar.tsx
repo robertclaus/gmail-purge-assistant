@@ -10,6 +10,7 @@ import AvatarImage from './avatar.png';
 
 const navigation = [
   { name: 'Purge Assistant', href: '/' },
+  { name: "FAQ", href: '/faq'}
 ];
 
 function classNames(...classes: string[]) {
