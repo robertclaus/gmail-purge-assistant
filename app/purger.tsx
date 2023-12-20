@@ -104,7 +104,7 @@ export default function Purger() {
           columnNames={["Size", "Date", "From", "Subject"]} 
           data={topEmails} 
           title="Largest Emails"
-          tooltip="This table shows the largest emails sampled. Click 'Show More' to see columns with additional information."
+          tooltip="This table shows the largest emails sampled. Click &apos;Show More&apos; to see columns with additional information."
         />
       </Grid>
     </Card>
