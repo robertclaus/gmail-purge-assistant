@@ -8,7 +8,6 @@ interface Tracker {
 export const MessageTracker = ({messageList, unloadedIds, maxLoad}: {messageList: any[], unloadedIds:string[], maxLoad:number}) => {
   
   const cellCount = 50;
-  const messageLookup = messageList.reduce((messageById, currentMessage) => { messageById[currentMessage["id"]] = currentMessage; return messageById}, {});
   const data: Tracker [] = [];
 
   var batchMax = Math.ceil(maxLoad / cellCount);
@@ -32,7 +31,7 @@ export const MessageTracker = ({messageList, unloadedIds, maxLoad}: {messageList
       <Title>Loading Status</Title>
       <Text>Downloading Messages From Gmail</Text>
       <Flex justifyContent="end" className="mt-4">
-        <Text>{unloadedIds.length} Messages Expected</Text>
+        <Text>{unloadedIds.length} Messages Remaining</Text>
       </Flex>
       <Tracker key={data.length} data={data} className="mt-2" />
     </Card>

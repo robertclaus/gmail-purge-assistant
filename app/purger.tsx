@@ -1,13 +1,13 @@
 'use client';
 import React, { useState, useEffect } from 'react';
 import { signIn, useSession } from "next-auth/react";
-import getNextIds from "./lister";
-import getMessages from './getMessages';
-import DataTable from './table';
+import getNextIds from "./helpers/getNextIds";
+import getMessages from './helpers/getMessages';
+import DataTable from './dataTable';
 import MetricTable from './metricTable';
 import { Grid } from '@tremor/react';
 import { MessageTracker } from './tracker';
-import { SetupCard } from './loadSettings';
+import { SetupCard } from './setupCard';
 
 export default function Purger() {
   const [maxLoad, setMaxLoad] = useState(1000);
@@ -55,12 +55,10 @@ export default function Purger() {
     return topList.slice(0,10);
   }, []);
   
-
-  //@ts-ignore
   return <div>
     {status === "authenticated" && <>
       <Grid numItemsSm={1} numItemsLg={2} className="gap-6">
-        <SetupCard start={()=>{setOkToLoadIds(true);}} stop={()=>{setOkToLoadMessages(false); setOkToLoadIds(false); console.log(messageList);}} target={maxLoad} changeTarget={(val)=>{setMaxLoad(val.target.value); console.log(val.target.value);}}/>
+        <SetupCard start={()=>{setOkToLoadIds(true);}} stop={()=>{setOkToLoadMessages(false); setOkToLoadIds(false); console.log(messageList);}} target={maxLoad} changeTarget={(val)=>{setMaxLoad(val.target.value);}} running={okToLoadIds}/>
         <MessageTracker messageList={messageList} unloadedIds={unloadedIds} maxLoad={maxLoad}/>
         <DataTable columns={["sizePretty", "date", "from", "subject"]} columnNames={["Size", "Date", "From", "Subject"]} data={topEmails} />
         <MetricTable data={messageList} />

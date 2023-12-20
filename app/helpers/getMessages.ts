@@ -1,5 +1,5 @@
 import { signOut } from "next-auth/react";
-import { fileSizePretty } from "./helpers";
+import { fileSizePretty } from "./utils";
 
 const MAX_CHUNK_SIZE = 75;
 

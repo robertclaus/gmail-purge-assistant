@@ -3,7 +3,7 @@ import { Button, Card, Flex, Text, TextInput, BarList, Title } from "@tremor/rea
 import { Dialog, Transition } from "@headlessui/react";
 import { ArrowsPointingOutIcon } from "@heroicons/react/24/outline";
 import { MagnifyingGlassIcon } from "@heroicons/react/24/solid";
-import { fileSizePretty } from "./helpers";
+import { fileSizePretty } from "./helpers/utils";
 
   //const valueFormatter = (number:any) => `${Intl.NumberFormat("us").format(number).toString()}`;
   

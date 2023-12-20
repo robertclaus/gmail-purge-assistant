@@ -1,62 +1,46 @@
-<picture>
-  <source media="(prefers-color-scheme: dark)" srcset="https://user-images.githubusercontent.com/9113740/201498864-2a900c64-d88f-4ed4-b5cf-770bcb57e1f5.png">
-  <source media="(prefers-color-scheme: light)" srcset="https://user-images.githubusercontent.com/9113740/201498152-b171abb8-9225-487a-821c-6ff49ee48579.png">
-  <img alt="Shows all of the tools in the stack for this template, also listed in the README file." src="https://user-images.githubusercontent.com/9113740/201498152-b171abb8-9225-487a-821c-6ff49ee48579.png">
-</picture>
-
-<div align="center"><strong>Next.js 14 Admin Dashboard Template</strong></div>
-<div align="center">Built with the Next.js App Router</div>
+<div align="center"><strong>Gmail Purge Assistant</strong></div>
+<div align="center">Built with Next.js</div>
 <br />
 <div align="center">
-<a href="http://admin-dash-template.vercel.sh/">Demo</a>
-<span> · </span>
-<a href="https://vercel.com/templates/next.js/admin-dashboard-tailwind-planetscale-react-nextjs">Clone & Deploy</a>
-<span>
+<a href="https://gmail-purge-assistant-robertclaus.vercel.app/">Demo</a>
 </div>
+
 
 ## Overview
 
-This is a starter template using the following stack:
+This project provides a simple tool that loads in emails from your Gmail account and finds sets of emails that are using up a lot of space. This should allow users to find emails to delete to clear up storage space.
 
-- Framework - [Next.js 14](https://nextjs.org/14)
-- Language - [TypeScript](https://www.typescriptlang.org)
-- Auth - [NextAuth.js](https://next-auth.js.org)
-- Database - [Vercel Postgres](https://vercel.com/postgres)
-- Deployment - [Vercel](https://vercel.com/docs/concepts/next.js/overview)
-- Styling - [Tailwind CSS](https://tailwindcss.com)
-- Components - [Tremor](https://www.tremor.so)
-- Analytics - [Vercel Analytics](https://vercel.com/analytics)
-- Linting - [ESLint](https://eslint.org)
-- Formatting - [Prettier](https://prettier.io)
-
-This template uses the new Next.js App Router. This includes support for enhanced layouts, colocation of components, tests, and styles, component-level data fetching, and more.
 
 ## Getting Started
 
-During the deployment, Vercel will prompt you to create a new Postgres database. This will add the necessary environment variables to your project.
+To start the application locally, copy the file `.env.local.example` to a new file `.env`. Then add your Google application's Oauth credentials to the `.env` file. Instructions for generating new Oauth credentials are in the next section.
 
-Inside the Vercel Postgres dashboard, create a table based on the schema defined in this repository.
-
-```
-CREATE TABLE users (
-  id SERIAL PRIMARY KEY,
-  email VARCHAR(255) NOT NULL,
-  name VARCHAR(255),
-  username VARCHAR(255)
-);
-```
-
-Insert a row for testing:
+Then run the following commands to start the project:
 
 ```
-INSERT INTO users (id, email, name, username) VALUES (1, 'me@site.com', 'Me', 'username');
-```
-
-Finally, run the following commands to start the development server:
-
-```
-pnpm install
-pnpm dev
+npm install
+npm run dev
 ```
 
 You should now be able to access the application at http://localhost:3000.
+
+
+## Creating new Oauth credentials
+
+To create new Oauth credentials, follow these steps:
+1. Log into https://console.cloud.google.com/
+2. Create a new Project and make sure you select it in the page header.
+3. Search for "Gmail API" and select the API Marketplace option.
+4. Click "Enable API". If you're not redirected, click "Manage" on that page or go directly to [here](https://console.cloud.google.com/apis/api/gmail.googleapis.com/metrics).
+5. Navigate to "Oauth Consent Screen" on the left. Choose "External" as the application type unless you know otherwise.
+  Fill out the general information as necessary.
+  On the Scopes section, add these scopes:
+    gmail.readonly
+    userinfo.email
+    userinfo.profile
+  On the Test User section, add your own email.
+5. Navigate to the credentials section and select "Create Credentials". Select the type of "Oauth Client ID".
+In the next form, choose the following options:
+  Application Type : Web Application
+  Authorized Redirect URIs: http://localhost:3000/api/auth/callback/google
+  Authorized Javascript Origins: http://localhost:3000
