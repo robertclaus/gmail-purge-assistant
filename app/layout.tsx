@@ -2,6 +2,7 @@ import './globals.css';
 
 import Nav from './nav';
 import { Suspense } from 'react';
+import Footer from './footer';
 
 export const metadata = {
   title: 'Gmail Purge Assistant',
@@ -21,6 +22,7 @@ export default function RootLayout({
           <Nav />
         </Suspense>
         {children}
+        <Footer />
       </body>
     </html>
   );
