@@ -2,7 +2,7 @@
 <div align="center">Built with Next.js</div>
 <br />
 <div align="center">
-<a href="https://gmail-purge-assistant-robertclaus.vercel.app/">Demo</a>
+<a href="https://gmail-purge-assistant.robertclaus.com/">Demo</a>
 </div>
 
 
