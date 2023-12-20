@@ -7,13 +7,23 @@ import { fileSizePretty } from "./helpers/utils";
 
   //const valueFormatter = (number:any) => `${Intl.NumberFormat("us").format(number).toString()}`;
   
-  export default function MetricTable({ data }: { data: any[] }) {
-    const metric = "size";
-    const metricName = "Size";
-    const grouper = "from";
-    const grouperName = "From";
-    const title ="Top Senders";
-    const valueFormatter = fileSizePretty;
+  export default function MetricTable({ 
+    data, 
+    metric,
+    metricName, 
+    grouper, 
+    grouperName, 
+    title, 
+    valueFormatter
+  }: { 
+    data: any[],
+    metric: string,
+    metricName: string,
+    grouper: string,
+    grouperName: string,
+    title: string,
+    valueFormatter: (arg0: any) => string,
+  }) {
 
     const sizeByFrom = data.reduce((sizeByFrom, nextMessage) => {
       if(!sizeByFrom[nextMessage[grouper]]) {

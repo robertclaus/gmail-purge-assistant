@@ -8,6 +8,7 @@ import MetricTable from './metricTable';
 import { Grid } from '@tremor/react';
 import { MessageTracker } from './tracker';
 import { SetupCard } from './setupCard';
+import { fileSizePretty } from './helpers/utils';
 
 export default function Purger() {
   const [maxLoad, setMaxLoad] = useState(1000);
@@ -65,8 +66,38 @@ export default function Purger() {
       <Grid numItemsSm={1} numItemsLg={2} className="gap-6">
         <SetupCard start={()=>{setOkToLoadIds(true);}} stop={()=>{setOkToLoadMessages(false); setOkToLoadIds(false); console.log(messageList);}} target={maxLoad} changeTarget={(val)=>{setMaxLoad(val.target.value);}} running={okToLoadIds}/>
         <MessageTracker messageList={messageList} unloadedIds={unloadedIds} maxLoad={maxLoad}/>
-        <DataTable columns={["sizePretty", "date", "from", "subject"]} columnNames={["Size", "Date", "From", "Subject"]} data={topEmails} />
-        <MetricTable data={messageList} />
+        <MetricTable 
+          data={messageList} 
+          metric="size"
+          metricName="Size"
+          grouper="from"
+          grouperName = "From"
+          title ="Largest Senders"
+          valueFormatter ={fileSizePretty}
+        />
+        <MetricTable 
+          data={messageList} 
+          metric="count"
+          metricName="Number"
+          grouper="from"
+          grouperName = "From"
+          title ="Frequent Senders"
+          valueFormatter ={(val) => val}
+        />
+        <MetricTable 
+          data={messageList} 
+          metric="count"
+          metricName="Number"
+          grouper="to"
+          grouperName = "To"
+          title ="Receiving Aliases"
+          valueFormatter ={(val) => val}
+        />
+        <DataTable 
+          columns={["sizePretty", "date", "from", "subject"]} 
+          columnNames={["Size", "Date", "From", "Subject"]} 
+          data={topEmails} 
+        />
       </Grid>
     </>}
     {status !== "authenticated" && <button onClick={() => signIn('google')}>Click to sign in</button>}

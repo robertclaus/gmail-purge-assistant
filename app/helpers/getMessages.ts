@@ -64,12 +64,15 @@ function getMessages(
       newMessages = newMessages.map((body) => {
         return {
           id: body.id,
+          count: 1,
           size: body.sizeEstimate,
           sizePretty: fileSizePretty(body.sizeEstimate),
           //@ts-ignore
           subject: body.payload?.headers.find((obj) => {return obj.name === "Subject"})?.value,
           //@ts-ignore
           from: body.payload?.headers.find((obj) => {return obj.name === "From"})?.value,
+          //@ts-ignore
+          to: body.payload?.headers.find((obj) => {return obj.name === "To"})?.value,
           //@ts-ignore
           date: body.payload?.headers.find((obj) => {return obj.name === "Date"})?.value,
         }
