@@ -1,14 +1,12 @@
 import './globals.css';
 
-import { Analytics } from '@vercel/analytics/react';
 import Nav from './nav';
-import Toast from './toast';
 import { Suspense } from 'react';
 
 export const metadata = {
-  title: 'Next.js App Router + NextAuth + Tailwind CSS',
+  title: 'Gmail Purge Assistant',
   description:
-    'A user admin dashboard configured with Next.js, Postgres, NextAuth, Tailwind CSS, TypeScript, ESLint, and Prettier.'
+    'A tool for finding emails to purge from Gmail to save space.'
 };
 
 export default function RootLayout({
@@ -23,8 +21,6 @@ export default function RootLayout({
           <Nav />
         </Suspense>
         {children}
-        <Analytics />
-        <Toast />
       </body>
     </html>
   );

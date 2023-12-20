@@ -6,10 +6,10 @@ import { Disclosure, Menu, Transition } from '@headlessui/react';
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
 import { signIn, signOut } from 'next-auth/react';
 import Image from 'next/image';
+import AvatarImage from './avatar.png';
 
 const navigation = [
-  { name: 'Dashboard', href: '/' },
-  { name: 'Playground', href: '/playground' }
+  { name: 'Purge Assistant', href: '/' },
 ];
 
 function classNames(...classes: string[]) {
@@ -27,26 +27,14 @@ export default function Navbar({ user }: { user: any }) {
             <div className="flex h-16 justify-between">
               <div className="flex">
                 <div className="flex flex-shrink-0 items-center">
-                  <svg
-                    width="32"
-                    height="32"
-                    viewBox="0 0 32 32"
-                    fill="none"
-                    className="text-gray-100"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <rect
-                      width="100%"
-                      height="100%"
-                      rx="16"
-                      fill="currentColor"
-                    />
-                    <path
-                      fillRule="evenodd"
-                      clipRule="evenodd"
-                      d="M17.6482 10.1305L15.8785 7.02583L7.02979 22.5499H10.5278L17.6482 10.1305ZM19.8798 14.0457L18.11 17.1983L19.394 19.4511H16.8453L15.1056 22.5499H24.7272L19.8798 14.0457Z"
-                      fill="black"
-                    />
+                  <svg id="sw-js-blob-svg" width="32" height="32" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                    <defs> 
+                        <linearGradient id="sw-gradient" x1="0" x2="1" y1="1" y2="0">
+                            <stop id="stop1" stopColor="rgba(232.431, 76.449, 2.625, 1)" offset="0%"></stop>
+                            <stop id="stop2" stopColor="rgba(60.317, 31, 251, 1)" offset="100%"></stop>
+                        </linearGradient>
+                    </defs>
+                    <path fill="url(#sw-gradient)" d="M11.2,-18.7C15,-17.2,18.9,-15.2,22.2,-12C25.4,-8.8,28.1,-4.4,30.8,1.6C33.6,7.6,36.5,15.2,33.7,19.3C31,23.3,22.6,24,16,23.2C9.5,22.4,4.7,20.3,-0.2,20.5C-5,20.8,-10.1,23.5,-16.6,24.2C-23.1,25,-31,23.7,-33.7,19.4C-36.4,15,-33.8,7.5,-29.6,2.4C-25.5,-2.7,-19.8,-5.4,-16.7,-9C-13.6,-12.6,-13,-17.1,-10.7,-19.4C-8.3,-21.7,-4.1,-21.8,-0.2,-21.5C3.7,-21.1,7.4,-20.2,11.2,-18.7Z" width="100%" height="100%" transform="translate(50 50)" strokeWidth="0" stroke="url(#sw-gradient)"></path>
                   </svg>
                 </div>
                 <div className="hidden sm:-my-px sm:ml-6 sm:flex sm:space-x-8">
@@ -74,7 +62,7 @@ export default function Navbar({ user }: { user: any }) {
                       <span className="sr-only">Open user menu</span>
                       <Image
                         className="h-8 w-8 rounded-full"
-                        src={user?.image || 'https://avatar.vercel.sh/leerob'}
+                        src={user?.image || AvatarImage}
                         height={32}
                         width={32}
                         alt={`${user?.name || 'placeholder'} avatar`}
@@ -113,7 +101,7 @@ export default function Navbar({ user }: { user: any }) {
                                 active ? 'bg-gray-100' : '',
                                 'flex w-full px-4 py-2 text-sm text-gray-700'
                               )}
-                              onClick={() => signIn('github')}
+                              onClick={() => signIn('google')}
                             >
                               Sign in
                             </button>

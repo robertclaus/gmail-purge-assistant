@@ -1,35 +1,17 @@
-import { sql } from '@vercel/postgres';
+'use client';
 import { Card, Title, Text } from '@tremor/react';
-import Search from './search';
-import UsersTable from './table';
+import Purger from './purger';
+import { SessionProvider } from "next-auth/react";
 
-interface User {
-  id: number;
-  name: string;
-  username: string;
-  email: string;
-}
-
-export default async function IndexPage({
-  searchParams
-}: {
-  searchParams: { q: string };
-}) {
-  const search = searchParams.q ?? '';
-  const result = await sql`
-    SELECT id, name, username, email 
-    FROM users 
-    WHERE name ILIKE ${'%' + search + '%'};
-  `;
-  const users = result.rows as User[];
-
+export default async function IndexPage({}:{}) {
   return (
     <main className="p-4 md:p-10 mx-auto max-w-7xl">
-      <Title>Users</Title>
-      <Text>A list of users retrieved from a Postgres database.</Text>
-      <Search />
+      <Title>Gmail Purge Assistant</Title>
+      <Text>This tool analyzes your email to find groups of emails that can be deleted to recover space.</Text>
       <Card className="mt-6">
-        <UsersTable users={users} />
+        <SessionProvider>
+          <Purger />
+        </SessionProvider>
       </Card>
     </main>
   );
