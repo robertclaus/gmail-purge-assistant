@@ -34,6 +34,11 @@ export default function Purger() {
   const [chunkSize, setChunkSize] = useState<number>(50);
 
   useEffect(() => {
+    if(unloadedIds.length === 0) {
+      setOkToLoadMessages(false);
+      setOkToLoadIds(false);
+      return;
+    }
     if(okToLoadMessages) {
       getMessages(
         //@ts-ignore

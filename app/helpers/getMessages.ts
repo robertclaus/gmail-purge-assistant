@@ -1,5 +1,5 @@
 import { signOut } from "next-auth/react";
-import { fileSizePretty } from "./utils";
+import { fileSizePretty, sleep } from "./utils";
 
 const MAX_CHUNK_SIZE = 75;
 
@@ -50,8 +50,9 @@ function getMessages(
       var newMessages = messages.filter((body) => {return body !== undefined;});
       
       const successRate = newMessages.length / chunkSize;
+      var timeToWait = 100;
       if(successRate < 0.5) {
-        //wait to send next message
+        timeToWait = 1000;
       }
       if(successRate < 0.95) {
         setChunkSize(Math.max(Math.ceil(chunkSize*0.9 - 1), 1));
@@ -76,7 +77,7 @@ function getMessages(
       //@ts-ignore
       setMessageList([...messageList, ...newMessages]);
       const retrievedIds = newMessages.map((m) => m.id);
-      setUnloadedIds(unloadedIds.filter(item => !retrievedIds.includes(item)));
+      sleep(timeToWait).then(() => { setUnloadedIds(unloadedIds.filter(item => !retrievedIds.includes(item))); });
     });
   }
 

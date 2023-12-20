@@ -33,14 +33,14 @@ To create new Oauth credentials, follow these steps:
 3. Search for "Gmail API" and select the API Marketplace option.
 4. Click "Enable API". If you're not redirected, click "Manage" on that page or go directly to [here](https://console.cloud.google.com/apis/api/gmail.googleapis.com/metrics).
 5. Navigate to "Oauth Consent Screen" on the left. Choose "External" as the application type unless you know otherwise.
-  Fill out the general information as necessary.
-  On the Scopes section, add these scopes:
-    gmail.readonly
-    userinfo.email
-    userinfo.profile
-  On the Test User section, add your own email.
+- Fill out the general information as necessary.
+- On the Scopes section, add these scopes:
+- - gmail.readonly
+- - userinfo.email
+- - userinfo.profile
+- On the Test User section, add your own email.
 5. Navigate to the credentials section and select "Create Credentials". Select the type of "Oauth Client ID".
 In the next form, choose the following options:
-  Application Type : Web Application
-  Authorized Redirect URIs: http://localhost:3000/api/auth/callback/google
-  Authorized Javascript Origins: http://localhost:3000
+- Application Type : Web Application
+- Authorized Redirect URIs: http://localhost:3000/api/auth/callback/google
+- Authorized Javascript Origins: http://localhost:3000
