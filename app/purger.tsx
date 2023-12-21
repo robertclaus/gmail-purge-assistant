@@ -27,8 +27,8 @@ export default function Purger() {
     if (okToLoadIds && !okToLoadMessages && count >= maxLoad) {
       setOkToLoadMessages(true);
     } else if (okToLoadIds && count < maxLoad) {
-      //@ts-ignore
       getNextIds(
+        //@ts-ignore
         session?.accessToken,
         nextToken,
         setNextToken,
