@@ -1,4 +1,4 @@
-<div align="center"><strong>Gmail Purge Assistant</strong></div>
+<div align="center"><strong>Email Purge Assistant</strong></div>
 <div align="center">Built with Next.js</div>
 <br />
 <div align="center">

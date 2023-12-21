@@ -5,9 +5,9 @@ import { Suspense } from 'react';
 import Footer from './footer';
 
 export const metadata = {
-  title: 'Gmail Purge Assistant',
+  title: 'Email Purge Assistant',
   description:
-    'A tool for finding emails to purge from Gmail to save space.'
+    'A tool for finding emails to purge from your email to save space.'
 };
 
 export default function RootLayout({

@@ -9,7 +9,7 @@ import Image from 'next/image';
 import AvatarImage from './avatar.png';
 
 const navigation = [
-  { name: 'Purge Assistant', href: '/' },
+  { name: 'Email Purge Assistant', href: '/' },
   { name: "FAQ", href: '/faq'}
 ];
 

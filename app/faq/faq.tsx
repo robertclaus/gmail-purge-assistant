@@ -18,7 +18,7 @@ export default function FAQ() {
         </Card>
         <Card className="my-4">
             <Title>If close my browser will it delete my data?</Title>
-            <Text>Yes. At the moment closing the browser page will clear all data that . Note, the access token Google provides us may remain active if you don&apos;t sign out.</Text>
+            <Text>Yes. At the moment closing the browser page will clear all data that has been loaded. Note, the access token Google provides us may remain active if you don&apos;t sign out.</Text>
         </Card>
         <Card className="my-4">
             <Title>Where can I report issues or request new features?</Title>
