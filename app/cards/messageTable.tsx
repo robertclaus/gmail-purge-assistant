@@ -1,6 +1,10 @@
 import { Fragment, useState } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
-import { ArrowsPointingOutIcon, TrashIcon } from '@heroicons/react/24/outline';
+import {
+  ArrowsPointingOutIcon,
+  TrashIcon,
+  EyeSlashIcon
+} from '@heroicons/react/24/outline';
 import { InformationCircleIcon } from '@heroicons/react/24/solid';
 import {
   Button,
@@ -23,13 +27,15 @@ export default function MessageTable({
   title,
   tooltip,
   deleteFn,
+  hideFn
 }: {
-  columns: any[],
-  columnNames: string[],
-  data: any[],
-  title: string,
-  tooltip: string,
-  deleteFn: undefined | ((arg0:string) => void),
+  columns: any[];
+  columnNames: string[];
+  data: any[];
+  title: string;
+  tooltip: string;
+  deleteFn: undefined | ((arg0: string) => void);
+  hideFn: undefined | ((id:string) => void);
 }) {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -46,7 +52,8 @@ export default function MessageTable({
         <Table>
           <TableHead>
             <TableRow>
-                {deleteFn && <TableHeaderCell key={"Delete"}></TableHeaderCell>}
+              {deleteFn && <TableHeaderCell key={'Delete'}></TableHeaderCell>}
+              {hideFn && <TableHeaderCell key={'Hide'}></TableHeaderCell>}
               {columnNames.map((item) => (
                 <TableHeaderCell key={item}>{item}</TableHeaderCell>
               ))}
@@ -55,7 +62,34 @@ export default function MessageTable({
           <TableBody>
             {data.map((row) => (
               <TableRow key={row['id']}>
-                  {deleteFn && <TableCell key={"Delete"}><Icon className="cursor-pointer" icon={TrashIcon} onClick={() => {deleteFn ? deleteFn(row['id']) : alert("Deleting is disabled.")}}></Icon></TableCell>}
+                {deleteFn && (
+                  <TableCell key={'Delete'}>
+                    <Icon
+                      className="cursor-pointer"
+                      icon={TrashIcon}
+                      tooltip="Move this item to the trash."
+                      onClick={() => {
+                        deleteFn
+                          ? deleteFn(row['id'])
+                          : alert('Deleting is disabled.');
+                      }}
+                    ></Icon>
+                  </TableCell>
+                )}
+                {hideFn && (
+                  <TableCell key={'Hide'}>
+                    <Icon
+                      className="cursor-pointer"
+                      icon={EyeSlashIcon}
+                      tooltip="Hide this item from this tool."
+                      onClick={() => {
+                        hideFn
+                          ? hideFn(row['id'])
+                          : alert('Hiding is disabled.');
+                      }}
+                    ></Icon>
+                  </TableCell>
+                )}
                 {columns.map((column) => (
                   <TableCell key={column}>{row[column]}</TableCell>
                 ))}
@@ -108,7 +142,12 @@ export default function MessageTable({
                     <Table className="h-[450px]">
                       <TableHead>
                         <TableRow>
-                        {deleteFn && <TableHeaderCell key={"Delete"}></TableHeaderCell>}
+                          {deleteFn && (
+                            <TableHeaderCell key={'Delete'}></TableHeaderCell>
+                          )}
+                          {hideFn && (
+                            <TableHeaderCell key={'Hide'}></TableHeaderCell>
+                          )}
                           {columnNames.map((item) => (
                             <TableHeaderCell key={item} className="bg-white">
                               {item}
@@ -119,7 +158,34 @@ export default function MessageTable({
                       <TableBody>
                         {data.map((row) => (
                           <TableRow key={row['id']}>
-                            {deleteFn && <TableCell key={"Delete"}><Icon className="cursor-pointer" icon={TrashIcon} onClick={() => {deleteFn ? deleteFn(row['id']) : alert("Deleting is disabled.")}}></Icon></TableCell>}
+                            {deleteFn && (
+                              <TableCell key={'Delete'}>
+                                <Icon
+                                  className="cursor-pointer"
+                                  icon={TrashIcon}
+                                  tooltip="Move this item to the trash."
+                                  onClick={() => {
+                                    deleteFn
+                                      ? deleteFn(row['id'])
+                                      : alert('Deleting is disabled.');
+                                  }}
+                                ></Icon>
+                              </TableCell>
+                            )}
+                            {hideFn && (
+                              <TableCell key={'Hide'}>
+                                <Icon
+                                  className="cursor-pointer"
+                                  icon={EyeSlashIcon}
+                                  tooltip="Hide this item from this tool."
+                                  onClick={() => {
+                                    hideFn
+                                      ? hideFn(row['id'])
+                                      : alert('Hiding is disabled.');
+                                  }}
+                                ></Icon>
+                              </TableCell>
+                            )}
                             {columns.map((column) => (
                               <TableCell key={column}>{row[column]}</TableCell>
                             ))}

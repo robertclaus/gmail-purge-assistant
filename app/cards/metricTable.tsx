@@ -1,7 +1,7 @@
 import { Fragment, useState } from "react";
 import { Button, Card, Flex, TextInput, BarList, Title, Icon } from "@tremor/react";
 import { Dialog, Transition } from "@headlessui/react";
-import { ArrowsPointingOutIcon } from "@heroicons/react/24/outline";
+import { ArrowsPointingOutIcon, EyeSlashIcon } from "@heroicons/react/24/outline";
 import { MagnifyingGlassIcon } from "@heroicons/react/24/solid";
 import { InformationCircleIcon } from '@heroicons/react/24/solid';
 
@@ -15,7 +15,8 @@ import { InformationCircleIcon } from '@heroicons/react/24/solid';
     grouperName, 
     title, 
     tooltip,
-    valueFormatter
+    valueFormatter,
+    hideFn,
   }: { 
     data: any[],
     metric: string,
@@ -25,6 +26,7 @@ import { InformationCircleIcon } from '@heroicons/react/24/solid';
     title: string,
     tooltip: string,
     valueFormatter: (arg0: any) => string,
+    hideFn: undefined | ((sender:string) => void),
   }) {
 
     const sizeByFrom = data.reduce((sizeByFrom, nextMessage) => {
@@ -39,7 +41,20 @@ import { InformationCircleIcon } from '@heroicons/react/24/solid';
     for (const [key, value] of Object.entries<number>(sizeByFrom)) {
       pages.push({
         name: key,
-        value: value
+        value: value,
+        icon: function ico(){
+          return (hideFn && <Icon
+            className="cursor-pointer"
+            icon={EyeSlashIcon}
+            tooltip="Hide this item from this tool."
+            size="xs"
+            onClick={() => {
+              hideFn
+                ? hideFn(key)
+                : alert('Hiding is disabled.');
+            }}
+          ></Icon>)
+        }
       })
     }
 

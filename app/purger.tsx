@@ -17,6 +17,7 @@ import deleteMessage from './helpers/deleteMessage';
 
 export default function Purger() {
   const [maxLoad, setMaxLoad] = useState(1000);
+  const [maxEmails, setMaxEmails] = useState(10);
   const { data: session, status } = useSession();
   //@ts-ignore
   const accessToken = session?.accessToken;
@@ -43,6 +44,7 @@ export default function Purger() {
   // Message content retrieval and indexing
   const [okToLoadMessages, setOkToLoadMessages] = useState(false);
   const [messageList, setMessageList] = useState<any[]>([]);
+  const [hiddenMessageList, setHiddenMessageList] = useState<any[]>([]);
   const [chunkSize, setChunkSize] = useState<number>(50);
 
   useEffect(() => {
@@ -70,11 +72,27 @@ export default function Purger() {
     topList.sort((a: any, b: any) => {
       return b.size - a.size;
     });
-    return topList.slice(0, 10);
+    return topList.slice(0, maxEmails);
   }, []);
 
   const deleteFn = (id:string) => {
     deleteMessage(accessToken, id);
+  }
+
+  const hideIdFn = (id:string) => {
+    if(id) {
+      const msg = messageList.find((m)=>{return m["id"] === id;});
+      setHiddenMessageList([...hiddenMessageList, msg]);
+      setMessageList(messageList.filter((m)=>{return m["id"] !== id;}));
+    }
+  }
+
+  const hideSenderFn = (sender:string) => {
+    if(sender) {
+      const msg = messageList.find((m)=>{return m["from"] === sender;});
+      setHiddenMessageList([...hiddenMessageList, msg]);
+      setMessageList(messageList.filter((m)=>{return m["from"] !== sender;}));
+    }
   }
 
   return (
@@ -90,12 +108,13 @@ export default function Purger() {
                 stop={() => {
                   setOkToLoadMessages(false);
                   setOkToLoadIds(false);
-                  console.log(messageList);
                 }}
                 target={maxLoad}
                 changeTarget={(val) => {
                   setMaxLoad(val.target.value);
                 }}
+                maxEmails={maxEmails}
+                setMaxEmails={setMaxEmails}
                 running={okToLoadIds}
               />
               <MessageTracker
@@ -126,6 +145,8 @@ export default function Purger() {
                 title="Search By Date"
                 tooltip="Use this to identify specific emails to delete."
                 deleteFn={deleteFn}
+                hideFn={hideIdFn}
+                maxEmails={maxEmails}
               />
             </Flex>
 
@@ -140,6 +161,7 @@ export default function Purger() {
                 title="Largest Senders"
                 tooltip="Shows the total size of emails associated with each email address that has sent mail in your account. May include emails you have sent as well."
                 valueFormatter={fileSizePretty}
+                hideFn={hideSenderFn}
               />
               <MetricTable
                 data={messageList}
@@ -150,6 +172,7 @@ export default function Purger() {
                 title="Frequent Senders"
                 tooltip="Shows the number of emails associated with each email address that has sent mail in your account. May include emails you have sent as well."
                 valueFormatter={(val) => val}
+                hideFn={hideSenderFn}
               />
               <MetricTable
                 data={messageList}
@@ -168,6 +191,7 @@ export default function Purger() {
                 title="Largest Emails"
                 tooltip="This table shows the largest emails sampled. Click 'Show More' to see columns with additional information."
                 deleteFn={deleteFn}
+                hideFn={hideIdFn}
               />
             </Grid>
           </Card>

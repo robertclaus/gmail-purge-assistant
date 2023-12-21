@@ -8,11 +8,15 @@ export const DateSearch = ({
   title,
   tooltip,
   deleteFn,
+  hideFn,
+  maxEmails,
 }: {
   messageList: any[];
   title: string;
   tooltip: string;
   deleteFn: undefined | ((arg0:string) => void);
+  hideFn: undefined | ((id:string) => void);
+  maxEmails: number;
 }) => {
   const [selectedEmails, setSelectedEmails] = useState<any[]>([]);
 
@@ -37,7 +41,7 @@ export const DateSearch = ({
         topList.sort((a: any, b: any) => {
           return b.size - a.size;
         });
-        return topList.slice(0, 10);
+        return topList.slice(0, maxEmails);
       }, []);
       setSelectedEmails(filteredMessages);
     }
@@ -65,6 +69,7 @@ export const DateSearch = ({
           title="Selected Emails"
           tooltip="This table shows the emails in the search criteria. Click 'Show More' to see columns with additional information."
           deleteFn={deleteFn}
+          hideFn={hideFn}
         />}
       </Card>
     </>
