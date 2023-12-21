@@ -142,7 +142,7 @@ export default function Purger() {
             <Flex className="gap-6">
               <DateSearch
                 messageList={messageList}
-                title="Search By Date"
+                title="Search By Date Range"
                 tooltip="Use this to identify specific emails to delete."
                 deleteFn={deleteFn}
                 hideFn={hideIdFn}

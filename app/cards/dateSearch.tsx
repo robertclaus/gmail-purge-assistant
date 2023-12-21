@@ -26,7 +26,6 @@ export const DateSearch = ({
   });
 
   useEffect(() => {
-
     if(dates.from !== undefined && dates.to !== undefined) {
       const from = dates.from?.valueOf();
       const to = dates.to?.valueOf();
@@ -35,7 +34,6 @@ export const DateSearch = ({
         //@ts-ignore 
         return msgDate > from && msgDate < to;
       });
-      console.log(filteredMessages);
       filteredMessages = filteredMessages.reduce((topList, nextMessage) => {
         topList.push(nextMessage);
         topList.sort((a: any, b: any) => {
@@ -45,7 +43,7 @@ export const DateSearch = ({
       }, []);
       setSelectedEmails(filteredMessages);
     }
-  }, [dates]);
+  }, [dates, messageList]);
 
   return (
     <>

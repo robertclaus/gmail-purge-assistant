@@ -4,12 +4,12 @@ import { Card, BarChart, Title, Flex, Icon } from "@tremor/react";
 export const DateChart = ({messageList, yAggregator, title, tooltip}: {messageList: any[], yAggregator: (msg: any) => number, title:string, tooltip:string}) => {
   var chartData: { [x: string] : number } = {};
 
-  var getDateString = (dateObj:Date) => { return `${dateObj.getFullYear()}-${dateObj.getMonth()+1}-${dateObj.getDate()}`;};
+  var getDateString = (dateObj:Date) => { return `${dateObj.getMonth()+1}/${dateObj.getDate()}/${dateObj.getFullYear()}`;};
   if(messageList.length > 1 && Date.parse(messageList[0]["date"]) - Date.parse(messageList[messageList.length - 1]["date"]) > 30000000000) {
-    getDateString = (dateObj:Date) => { return `${dateObj.getFullYear()}-${dateObj.getMonth()+1}`;};
+    getDateString = (dateObj:Date) => { return `${dateObj.getMonth()+1}-${dateObj.getFullYear()}`;};
   }
 
-  for(var i = 0; i<messageList.length; i++) {
+  for(var i = messageList.length-1; i>=0; i--) {
     const dateObj = new Date(messageList[i]["date"]);
     const dateString = getDateString(dateObj);
     if(!chartData[dateString]) {
