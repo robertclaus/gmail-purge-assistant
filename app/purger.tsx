@@ -183,6 +183,7 @@ export default function Purger() {
                 title="Receiving Aliases"
                 tooltip="Shows the total number of emails associated with each receiving email address in your account. This can be useful if you use email aliases for different types of services."
                 valueFormatter={(val) => val}
+                hideFn={undefined}
               />
               <MessageTable
                 columns={['sizePretty', 'date', 'from', 'subject']}
