@@ -1,6 +1,6 @@
 import { Fragment, useState } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
-import { ArrowsPointingOutIcon } from '@heroicons/react/24/outline';
+import { ArrowsPointingOutIcon, TrashIcon } from '@heroicons/react/24/outline';
 import { InformationCircleIcon } from '@heroicons/react/24/solid';
 import {
   Button,
@@ -16,18 +16,20 @@ import {
   Icon
 } from '@tremor/react';
 
-export default function DataTable({
+export default function MessageTable({
   columns,
   columnNames,
   data,
   title,
-  tooltip
+  tooltip,
+  deleteFn,
 }: {
-  columns: any[];
-  columnNames: string[];
-  data: any[];
-  title: string;
-  tooltip: string;
+  columns: any[],
+  columnNames: string[],
+  data: any[],
+  title: string,
+  tooltip: string,
+  deleteFn: undefined | ((arg0:string) => void),
 }) {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -44,6 +46,7 @@ export default function DataTable({
         <Table>
           <TableHead>
             <TableRow>
+                {deleteFn && <TableHeaderCell key={"Delete"}></TableHeaderCell>}
               {columnNames.map((item) => (
                 <TableHeaderCell key={item}>{item}</TableHeaderCell>
               ))}
@@ -52,6 +55,7 @@ export default function DataTable({
           <TableBody>
             {data.map((row) => (
               <TableRow key={row['id']}>
+                  {deleteFn && <TableCell key={"Delete"}><Icon className="cursor-pointer" icon={TrashIcon} onClick={() => {deleteFn ? deleteFn(row['id']) : alert("Deleting is disabled.")}}></Icon></TableCell>}
                 {columns.map((column) => (
                   <TableCell key={column}>{row[column]}</TableCell>
                 ))}
@@ -104,6 +108,7 @@ export default function DataTable({
                     <Table className="h-[450px]">
                       <TableHead>
                         <TableRow>
+                        {deleteFn && <TableHeaderCell key={"Delete"}></TableHeaderCell>}
                           {columnNames.map((item) => (
                             <TableHeaderCell key={item} className="bg-white">
                               {item}
@@ -114,6 +119,7 @@ export default function DataTable({
                       <TableBody>
                         {data.map((row) => (
                           <TableRow key={row['id']}>
+                            {deleteFn && <TableCell key={"Delete"}><Icon className="cursor-pointer" icon={TrashIcon} onClick={() => {deleteFn ? deleteFn(row['id']) : alert("Deleting is disabled.")}}></Icon></TableCell>}
                             {columns.map((column) => (
                               <TableCell key={column}>{row[column]}</TableCell>
                             ))}

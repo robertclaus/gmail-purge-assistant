@@ -1,16 +1,18 @@
 import { InformationCircleIcon } from '@heroicons/react/24/solid';
 import { Card, Title, Flex, Icon, DateRangePicker, DateRangePickerValue } from '@tremor/react';
-import DataTable from './dataTable';
+import MessageTable from './messageTable';
 import { useEffect, useState } from 'react';
 
 export const DateSearch = ({
   messageList,
   title,
-  tooltip
+  tooltip,
+  deleteFn,
 }: {
   messageList: any[];
   title: string;
   tooltip: string;
+  deleteFn: undefined | ((arg0:string) => void);
 }) => {
   const [selectedEmails, setSelectedEmails] = useState<any[]>([]);
 
@@ -56,12 +58,13 @@ export const DateSearch = ({
             onValueChange={setDates}
           />
         </Flex>
-        {selectedEmails.length > 0 && <DataTable
+        {selectedEmails.length > 0 && <MessageTable
           columns={['sizePretty', 'date', 'from', 'subject']}
           columnNames={['Size', 'Date', 'From', 'Subject']}
           data={selectedEmails}
           title="Selected Emails"
           tooltip="This table shows the emails in the search criteria. Click 'Show More' to see columns with additional information."
+          deleteFn={deleteFn}
         />}
       </Card>
     </>

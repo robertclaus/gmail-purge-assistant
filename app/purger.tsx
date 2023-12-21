@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { signIn, useSession } from 'next-auth/react';
 import getNextIds from './helpers/getNextIds';
 import getMessages from './helpers/getMessages';
-import DataTable from './cards/dataTable';
+import MessageTable from './cards/messageTable';
 import MetricTable from './cards/metricTable';
 import { Button, Card, Flex, Grid } from '@tremor/react';
 import { MessageTracker } from './cards/tracker';
@@ -13,10 +13,13 @@ import FAQ from './faq/faq';
 import { DateChart } from './cards/dateChart';
 import { DateSearch } from './cards/dateSearch';
 import { Divider } from "@tremor/react";
+import deleteMessage from './helpers/deleteMessage';
 
 export default function Purger() {
   const [maxLoad, setMaxLoad] = useState(1000);
   const { data: session, status } = useSession();
+  //@ts-ignore
+  const accessToken = session?.accessToken;
 
   const [unloadedIds, setUnloadedIds] = useState<string[]>(() => []);
   const [nextToken, setNextToken] = useState<string>('');
@@ -28,8 +31,7 @@ export default function Purger() {
       setOkToLoadMessages(true);
     } else if (okToLoadIds && count < maxLoad) {
       getNextIds(
-        //@ts-ignore
-        session?.accessToken,
+        accessToken,
         nextToken,
         setNextToken,
         unloadedIds,
@@ -51,8 +53,7 @@ export default function Purger() {
     }
     if (okToLoadMessages) {
       getMessages(
-        //@ts-ignore
-        session?.accessToken,
+        accessToken,
         unloadedIds,
         setUnloadedIds,
         messageList,
@@ -71,6 +72,10 @@ export default function Purger() {
     });
     return topList.slice(0, 10);
   }, []);
+
+  const deleteFn = (id:string) => {
+    deleteMessage(accessToken, id);
+  }
 
   return (
     <>
@@ -120,6 +125,7 @@ export default function Purger() {
                 messageList={messageList}
                 title="Search By Date"
                 tooltip="Use this to identify specific emails to delete."
+                deleteFn={deleteFn}
               />
             </Flex>
 
@@ -155,12 +161,13 @@ export default function Purger() {
                 tooltip="Shows the total number of emails associated with each receiving email address in your account. This can be useful if you use email aliases for different types of services."
                 valueFormatter={(val) => val}
               />
-              <DataTable
+              <MessageTable
                 columns={['sizePretty', 'date', 'from', 'subject']}
                 columnNames={['Size', 'Date', 'From', 'Subject']}
                 data={topEmails}
                 title="Largest Emails"
                 tooltip="This table shows the largest emails sampled. Click 'Show More' to see columns with additional information."
+                deleteFn={deleteFn}
               />
             </Grid>
           </Card>

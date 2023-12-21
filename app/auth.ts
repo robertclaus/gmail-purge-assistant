@@ -11,7 +11,7 @@ export const {
       clientSecret: process.env.OAUTH_CLIENT_SECRET as string,
       authorization: {
         params: {
-          scope: "https://www.googleapis.com/auth/gmail.readonly https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile openid"
+          scope: "https://www.googleapis.com/auth/gmail.readonly https://www.googleapis.com/auth/gmail.modify https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile openid"
         }
       }
     })
