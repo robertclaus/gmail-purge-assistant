@@ -4,9 +4,9 @@ import { Card, BarChart, Title, Flex, Icon } from "@tremor/react";
 export const DateChart = ({messageList, yAggregator, title, tooltip}: {messageList: any[], yAggregator: (msg: any) => number, title:string, tooltip:string}) => {
   var chartData: { [x: string] : number } = {};
 
-  var getDateString = (dateObj:Date) => { return `${dateObj.getFullYear()}-${dateObj.getMonth()}-${dateObj.getDate()}`;};
+  var getDateString = (dateObj:Date) => { return `${dateObj.getFullYear()}-${dateObj.getMonth()+1}-${dateObj.getDate()}`;};
   if(messageList.length > 1 && Date.parse(messageList[0]["date"]) - Date.parse(messageList[messageList.length - 1]["date"]) > 30000000000) {
-    getDateString = (dateObj:Date) => { return `${dateObj.getFullYear()}-${dateObj.getMonth()}`;};
+    getDateString = (dateObj:Date) => { return `${dateObj.getFullYear()}-${dateObj.getMonth()+1}`;};
   }
 
   for(var i = 0; i<messageList.length; i++) {
@@ -33,14 +33,16 @@ export const DateChart = ({messageList, yAggregator, title, tooltip}: {messageLi
         <Title>{title}</Title>
         <Icon icon={InformationCircleIcon} color="stone" tooltip={tooltip} />
       </Flex>
-      <BarChart
-        className="mt-6"
-        data={formattedChartData}
-        index="Date"
-        categories={['Size']}
-        colors={["neutral"]}
-        showLegend={false}
-      />
+      <Flex className="m-auto h-full">
+        <BarChart
+          className="mt-6"
+          data={formattedChartData}
+          index="Date"
+          categories={['Size']}
+          colors={["neutral"]}
+          showLegend={false}
+        />
+      </Flex>
     </Card>
   </>
 };

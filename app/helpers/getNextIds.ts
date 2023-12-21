@@ -7,8 +7,8 @@ function getNextIds(
     accessToken: string,
     nextToken: string, 
     setNextToken: (arg0: string) => void, 
-    unloadedIds: string[][],
-    setUnloadedIds: (arg0: string[][]) => void,
+    unloadedIds: string[],
+    setUnloadedIds: (arg0: string[]) => void,
 ) {
     const nextTokenString = nextToken ? `&pageToken=${nextToken}` : "";
     const listUrl = `https://gmail.googleapis.com/gmail/v1/users/me/messages?maxResults=500${nextTokenString}`;

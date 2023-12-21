@@ -5,12 +5,14 @@ import getNextIds from './helpers/getNextIds';
 import getMessages from './helpers/getMessages';
 import DataTable from './cards/dataTable';
 import MetricTable from './cards/metricTable';
-import { Button, Card, Grid } from '@tremor/react';
+import { Button, Card, Flex, Grid } from '@tremor/react';
 import { MessageTracker } from './cards/tracker';
 import { SetupCard } from './cards/setupCard';
 import { fileSizePretty } from './helpers/utils';
 import FAQ from './faq/faq';
 import { DateChart } from './cards/dateChart';
+import { DateSearch } from './cards/dateSearch';
+import { Divider } from "@tremor/react";
 
 export default function Purger() {
   const [maxLoad, setMaxLoad] = useState(1000);
@@ -97,6 +99,9 @@ export default function Purger() {
                 maxLoad={maxLoad}
                 rateLimited={chunkSize < 25}
               />
+            </Grid>
+              <Divider>Date Analysis</Divider>
+            <Grid numItemsSm={1} numItemsLg={2} className="gap-6">
               <DateChart
                 messageList={messageList}
                 yAggregator={(msg) => msg['size'] / 1000000}
@@ -109,6 +114,17 @@ export default function Purger() {
                 title="Number of Emails"
                 tooltip="This chart shows how many emails were received each unit of time."
               />
+            </Grid>
+            <Flex className="gap-6">
+              <DateSearch
+                messageList={messageList}
+                title="Search By Date"
+                tooltip="Use this to identify specific emails to delete."
+              />
+            </Flex>
+
+            <Divider>High Impact Factors</Divider>
+            <Grid numItemsSm={1} numItemsLg={2} className="gap-6 mt-12">
               <MetricTable
                 data={messageList}
                 metric="size"
