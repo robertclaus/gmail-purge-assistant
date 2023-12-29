@@ -77,6 +77,7 @@ export default function Purger() {
 
   const deleteFn = (id:string) => {
     deleteMessage(accessToken, id);
+    hideIdFn(id);
   }
 
   const hideIdFn = (id:string) => {
