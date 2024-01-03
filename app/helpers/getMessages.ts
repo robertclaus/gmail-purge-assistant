@@ -62,6 +62,7 @@ function getMessages(
       }
 
       newMessages = newMessages.map((body) => {
+        console.log(body);
         return {
           id: body.id,
           count: 1,
@@ -75,6 +76,8 @@ function getMessages(
           to: body.payload?.headers.find((obj) => {return obj.name === "To"})?.value,
           //@ts-ignore
           date: body.payload?.headers.find((obj) => {return obj.name === "Date"})?.value,
+          //@ts-ignore
+          isTrash: body.payload?.headers.find((obj) => {return obj.name === "Date"})?.value,
         }
       });
       //@ts-ignore

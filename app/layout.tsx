@@ -7,7 +7,12 @@ import Footer from './footer';
 export const metadata = {
   title: 'Email Purge Assistant',
   description:
-    'A tool for finding emails to purge from your email to save space.'
+    'A tool for finding emails to purge from your email to save space.',
+    openGraph: {
+      title: 'Email Purge Assistant',
+      description: 'A tool for finding emails to purge from your email to save space.',
+      images: ['/icon.ico'],
+    },
 };
 
 export default function RootLayout({
